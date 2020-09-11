@@ -87,6 +87,7 @@ defmodule OpenApiSpex.Plug.SwaggerUI do
         ],
         layout: "StandaloneLayout",
         requestInterceptor: function(request){
+          server_base = window.location.protocol + "//" + window.location.host;
           if(request.url.startsWith(server_base)) {
             request.headers["x-csrf-token"] = "<%= csrf_token %>";
           } else {
