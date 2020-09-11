@@ -87,7 +87,11 @@ defmodule OpenApiSpex.Plug.SwaggerUI do
         ],
         layout: "StandaloneLayout",
         requestInterceptor: function(request){
-          request.headers["x-csrf-token"] = "<%= csrf_token %>";
+          if(request.url.startsWith(server_base)) {
+            request.headers["x-csrf-token"] = "<%= csrf_token %>";
+          } else {
+            delete request.headers["x-csrf-token"];
+          }
           return request;
         }
         <%= for {k, v} <- Map.drop(config, [:path, :oauth]) do %>
